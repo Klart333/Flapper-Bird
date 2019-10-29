@@ -6,11 +6,20 @@ using UnityEngine;
 public class PipeMovement : MonoBehaviour
 {
     Rigidbody rb;
-    // Start is called before the first frame update
+    float deathtimer = 0;
     void Start()
     {
+        // Puts the pipes in movement towards the player
         rb = GetComponent<Rigidbody>();
-        rb.velocity = new Vector3(-5, 0, 0);
+        rb.velocity = new Vector3(-7, 0, 0);
+    }
+    //Destroys the pipe after 10 seconds
+    
+    private void DestroyObjectDelayed()
+    {
+        Destroy(rb.gameObject, 2);
+        print("dead");
     }
 
+    
 }
