@@ -11,7 +11,7 @@ public class PipeMovement : MonoBehaviour
     {
         // Puts the pipes in movement towards the player
         rb = GetComponent<Rigidbody>();
-        rb.velocity = new Vector3(-7, 0, 0);
+        rb.velocity = new Vector3(-8, 0, 0);
     }
     //Destroys the pipe after 10 seconds
     

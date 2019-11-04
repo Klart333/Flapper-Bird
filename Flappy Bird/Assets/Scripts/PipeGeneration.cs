@@ -12,18 +12,20 @@ public class PipeGeneration : MonoBehaviour
     #endregion
 
     float timer;
-    float timerMax = 2.5f;
+    float timerMax = 2f;
     void Update()
     {
         //En timer som räknar uppåt med deltaTime
         timer += Time.deltaTime;
+
+        //Placerar Rören med en timer som blir kortare för varje gång
         if (timer >= timerMax)
         {
             MakePipe();
             timer = 0;
             if (timerMax > 1)
             {
-                timerMax -= 0.03f;
+                timerMax -= 0.04f;
             }
         }
     }
