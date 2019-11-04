@@ -8,8 +8,10 @@ public class BirdMovement : MonoBehaviour
     [SerializeField]
     private Rigidbody cameraRb;
 
-    private bool isAlive = false;
+    bool isAlive = false;
+    bool hasStarted = false;
     float notJumpingTimer = 0f;
+    public int score; // Makes an public variable for the score
 
     private void Start()
     {
@@ -18,11 +20,11 @@ public class BirdMovement : MonoBehaviour
         birdRb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-    private void Update() 
+    private void Update()
     {
         #region Startup
         // Jump To Start The Game
-        if (isAlive == false && Input.GetKeyDown(KeyCode.Space))
+        if (hasStarted == false && Input.GetKeyDown(KeyCode.Space))
         {
             //Unfreezes everything then freezes the position and rotation of Z, it's a 2d game, is useless
             birdRb.constraints = RigidbodyConstraints.None;
@@ -33,48 +35,67 @@ public class BirdMovement : MonoBehaviour
             BirdJump(birdRb);
 
             isAlive = true;
+
         }
         #endregion
 
-        #region Gravity
-
-        birdRb.velocity += new Vector3(0, -0.23f, 0);
-
-        #endregion
-
-        #region Normal Jump
-        if (isAlive == true && Input.GetKeyDown(KeyCode.Space))
-        {
-            BirdJump(birdRb);
-        }
-        #endregion
-
-        #region Rotation
-
-        //increases the rotation timer
-        notJumpingTimer += Time.deltaTime;
-
-        //Dropps the bird if a jump has not been performed during the last 0.8 seconds
         
-        if (gameObject.transform.eulerAngles.z > 0 && gameObject.transform.eulerAngles.z < 100 && notJumpingTimer > 0.8f)
-        {
-            gameObject.transform.eulerAngles -= new Vector3(0, 0, 3);
-        }
-        else if (gameObject.transform.eulerAngles.z > 300 && notJumpingTimer > 0.8f)
-        {
-            gameObject.transform.eulerAngles -= new Vector3(0, 0, 2.5f);
+            #region Gravity
 
-        }
+            birdRb.velocity += new Vector3(0, -0.23f, 0);
 
-        #endregion
+            #endregion
+
+            #region Normal Jump
+            if (isAlive == true && Input.GetKeyDown(KeyCode.Space))
+            {
+                BirdJump(birdRb);
+            }
+            #endregion
+
+            #region Rotation
+
+            //increases the rotation timer
+            notJumpingTimer += Time.deltaTime;
+
+            //Dropps the bird if a jump has not been performed during the last 0.8 seconds
+
+            if (gameObject.transform.eulerAngles.z > 0 && gameObject.transform.eulerAngles.z < 100 && notJumpingTimer > 0.8f)
+            {
+                gameObject.transform.eulerAngles -= new Vector3(0, 0, 3.5f);
+            }
+            else if (gameObject.transform.eulerAngles.z > 300 && notJumpingTimer > 0.8f)
+            {
+                gameObject.transform.eulerAngles -= new Vector3(0, 0, 3f);
+
+            }
+
+            #endregion
+
+        
+
+
 
 
     }
 
-    //Death
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider collision)
     {
-        isAlive = false;
+        //Points
+        if (collision.gameObject.CompareTag("PointArea"))
+        {
+            score++; // Increases the score with every trigger
+            
+        }
+
+        // Death
+        if (collision.gameObject.CompareTag("Pipe") || collision.gameObject.CompareTag("Wall"))
+        {
+            isAlive = false;
+            birdRb.velocity = new Vector3(0, -10, 0); // Dropps the bird after death
+        }
+
     }
 
     //Makes the Jump And Rotation

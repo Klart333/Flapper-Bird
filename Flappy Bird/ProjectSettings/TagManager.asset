@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PointArea
+  - Pipe
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -40,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 4228421349
+    locked: 0
+  - name: Almost Background
+    uniqueID: 2560958577
     locked: 0
   - name: Default
     uniqueID: 0
