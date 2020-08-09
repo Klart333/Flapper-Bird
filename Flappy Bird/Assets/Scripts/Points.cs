@@ -17,6 +17,6 @@ public class Points : MonoBehaviour
     }
     void Update()
     {
-        points.text = birdMovementScript.score.ToString(); // Gets the public score variable from the BirdMovement Script and pastes it onto the text within points
+        points.text = BirdMovement.score.ToString(); // Gets the public score variable from the BirdMovement Script and pastes it onto the text within points
     }
 }
